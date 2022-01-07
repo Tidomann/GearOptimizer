@@ -1,7 +1,13 @@
+import java.util.Random;
+
 public class Face extends Equipment{
     int max = 11;
 
     public Face(int randomFace){
+        if (randomFace < 0 || randomFace >= max){
+            Random rand = new Random();
+            randomFace = rand.nextInt(max);
+        }
         switch (randomFace){
             case 0:
                 name = "Balanced Mask";

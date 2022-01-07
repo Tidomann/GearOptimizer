@@ -6,6 +6,7 @@ abstract class Equipment {
     Equipment augment;
     boolean hasAugmentWOS = false;
     Equipment augmentWOS;
+    boolean lore = false;
 
     //Equipment  Stat Data Fields
     int bonusAC = 0;
@@ -54,12 +55,16 @@ abstract class Equipment {
     int clairvoyance = 0;
     int combateffects = 0;
     int haste;
+    int hastev3;
 
     //skill mods
     int skillDodge = 0;
     int skillSafeFall = 0;
     int skillDefense = 0;
     int skill1HSlashing = 0;
+    int skillOffense = 0;
+    int skillChanneling = 0;
+    int skillEvocation = 0;
 
     //Class Equipable Logic
     boolean classAll = false;
@@ -122,4 +127,8 @@ abstract class Equipment {
         }
         return false;
     }
+    public boolean isLore(){
+        return this.lore;
+    }
+
 }

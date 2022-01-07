@@ -1,7 +1,12 @@
+import java.util.Random;
 public class Head extends Equipment{
     int max = 11;
 
     public Head(int randomHead){
+        if (randomHead < 0 || randomHead >= max){
+            Random rand = new Random();
+            randomHead = rand.nextInt(max);
+        }
         switch (randomHead){
             case 0:
                 name = "Bat Fur Headress";
@@ -235,22 +240,22 @@ public class Head extends Equipment{
         clairvoyance = inHead.clairvoyance;
 
         //Class Equipable Logic
-        classAll = false;
-        classMagician = false;
-        classCleric = false;
-        classBard = false;
-        classShaman = false;
-        classDruid = false;
-        classRanger = false;
-        classMonk = false;
-        classEnchanter = false;
-        classNecromancer = false;
-        classRogue = false;
-        classWarrior = false;
-        classBerserker = false;
-        classShadowknight = false;
-        classWizard = false;
-        classPaladin = false;
-        classBeastlord = false;
+        classAll = inHead.classAll;
+        classMagician = inHead.classMagician;
+        classCleric = inHead.classCleric;
+        classBard = inHead.classBard;
+        classShaman = inHead.classShaman;
+        classDruid = inHead.classDruid;
+        classRanger = inHead.classRanger;
+        classMonk = inHead.classMonk;
+        classEnchanter = inHead.classEnchanter;
+        classNecromancer = inHead.classNecromancer;
+        classRogue = inHead.classRogue;
+        classWarrior = inHead.classWarrior;
+        classBerserker = inHead.classBerserker;
+        classShadowknight = inHead.classShadowknight;
+        classWizard = inHead.classWizard;
+        classPaladin = inHead.classPaladin;
+        classBeastlord = inHead.classBeastlord;
     }
 }

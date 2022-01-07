@@ -1,7 +1,13 @@
+import java.util.Random;
+
 public class Arms extends Equipment{
     int max = 10;
 
     public Arms(int randomArms){
+        if (randomArms < 0 || randomArms >= max){
+            Random rand = new Random();
+            randomArms = rand.nextInt(max);
+        }
         switch (randomArms){
             case 0:
                 name = "Ant Armguards";
@@ -83,7 +89,7 @@ public class Arms extends Equipment{
                 hasAugmentWOS = true;
                 break;
             case 5:
-                name = "Mechanical Armguards>";
+                name = "Mechanical Armguards";
                 id = 5;
                 classAll = true;
                 bonusAC = 13;

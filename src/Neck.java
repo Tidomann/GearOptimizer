@@ -1,7 +1,13 @@
+import java.util.Random;
+
 public class Neck extends Equipment{
     int max = 11;
 
     public Neck(int randomNeck){
+        if (randomNeck < 0 || randomNeck >= max){
+            Random rand = new Random();
+            randomNeck = rand.nextInt(max);
+        }
         switch (randomNeck){
             case 0:
                 name = "Class A Necklace";

@@ -1,7 +1,13 @@
+import java.util.Random;
+
 public class Chest extends Equipment{
     int max = 10;
 
     public Chest(int randomChest){
+        if (randomChest < 0 || randomChest >= max){
+            Random rand = new Random();
+            randomChest = rand.nextInt(max);
+        }
         switch (randomChest){
             case 0:
                 name = "Alligator Scaled Coat";
