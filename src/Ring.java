@@ -27,7 +27,7 @@ public class Ring extends Equipment{
                 heroicDexterity = 2;
                 coldRes = 10;
                 attack = 4;
-                damageShield = 8;
+                damageShield = 5;
                 spellDamage = 2;
                 lore = true;
                 hasAugment = true;
@@ -84,6 +84,7 @@ public class Ring extends Equipment{
                 manaRegen = 1;
                 healAmount = 3;
                 spellDamage = 3;
+                skillParry = 5;
                 lore = true;
                 hasAugment = true;
                 break;

@@ -85,7 +85,7 @@ public class Chest extends Equipment{
                 dexterity = 15;
                 poisonRes = 25;
                 shielding = 2;
-                damageShield = 10;
+                damageShield = 6;
                 hasAugment = true;
                 break;
             case 5:

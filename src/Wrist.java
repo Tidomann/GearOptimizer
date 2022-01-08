@@ -188,7 +188,7 @@ public class Wrist extends Equipment{
                 poisonRes = 12;
                 attack = 3;
                 hpRegen = -5;
-                damageShield = 5;
+                damageShield = 2;
                 spellDamage = 4;
                 hasAugment = true;
                 break;

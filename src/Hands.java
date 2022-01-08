@@ -72,6 +72,27 @@ public class Hands extends Equipment{
                 accuracy = 1;
                 hasAugment = true;
                 break;
+            case 3:
+                name = "Firekeeper's Gloves";
+                id = 3;
+                classAll = true;
+                bonusAC = 10;
+                bonusHP = 20;
+                bonusMana = 70;
+                bonusEnd = 15;
+                strength = 5;
+                stamina = 5;
+                intelligence = 17;
+                heroicIntelligence = 1;
+                wisdom = 17;
+                charisma = 14;
+                heroicCharisma = 1;
+                magicRes = 10;
+                manaRegen = 1;
+                spellDamage = 4;
+                healAmount = 3;
+                hasAugment = true;
+                break;
         }
     }
 

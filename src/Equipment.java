@@ -54,8 +54,8 @@ abstract class Equipment {
     int spellDamage = 0;
     int clairvoyance = 0;
     int combateffects = 0;
-    int haste;
-    int hastev3;
+    int haste = 0;
+    int hastev3 = 0;
 
     //skill mods
     int skillDodge = 0;
@@ -65,6 +65,8 @@ abstract class Equipment {
     int skillOffense = 0;
     int skillChanneling = 0;
     int skillEvocation = 0;
+    int skillParry = 0;
+    int kickdamage = 0;
 
     //Class Equipable Logic
     boolean classAll = false;
@@ -129,6 +131,12 @@ abstract class Equipment {
     }
     public boolean isLore(){
         return this.lore;
+    }
+    public boolean hasAugment(){
+        return this.hasAugment;
+    }
+    public boolean hasAugmentWOS(){
+        return this.hasAugmentWOS;
     }
 
 }
