@@ -53,7 +53,7 @@ public class Outfit {
         outfitArray = new Equipment[21];
         // Generate Random Equipment
         ear1 = new Ear(-1);
-        if(ear1.lore){
+        if(ear1.isLore()){
             do{
                 ear2 = new Ear(-1);
             }while(ear2.id == ear1.id);
@@ -69,7 +69,7 @@ public class Outfit {
         waist = new Waist(-1);
         shoulders = new Shoulders(-1);
         bracer1 = new Wrist(-1);
-        if(bracer1.lore){
+        if(bracer1.isLore()){
             do{
                 bracer2 = new Wrist(-1);
             }while(bracer2.id == bracer1.id);
@@ -119,88 +119,10 @@ public class Outfit {
         // change the range to slots if we are generating all
         for(int i = 0; i < 17; ++i){
             if(outfitArray[i].hasAugment()){
-                do{
-                    outfitArray[i].augment = new Augment(true, false);
-                }while((outfitArray[i].augment.id == 1 && blackDragonEye) || (outfitArray[i].augment.id == 2 && blueDragonEye) ||
-                        (outfitArray[i].augment.id == 3 && candycorn) || (outfitArray[i].augment.id == 8 && greenDragonEye) ||
-                        (outfitArray[i].augment.id == 9 && gummybear) || (outfitArray[i].augment.id == 10 && redDragonEye) ||
-                        (outfitArray[i].augment.id == 11 && seedsofpower) || (outfitArray[i].augment.id == 12 && smarties) ||
-                        (outfitArray[i].augment.id == 13 && whiteDragonEye) || (outfitArray[i].augment.id == 28 && shardofenergy));
-                if(outfitArray[i].augment.isLore()){
-                    //flip boolean flag
-                    if(outfitArray[i].augment.id == 1) {
-                        blackDragonEye = true;
-                    }
-                    if(outfitArray[i].augment.id == 2) {
-                        blueDragonEye= true;
-                    }
-                    if(outfitArray[i].augment.id == 3) {
-                        candycorn = true;
-                    }
-                    if(outfitArray[i].augment.id == 8) {
-                        greenDragonEye = true;
-                    }
-                    if(outfitArray[i].augment.id == 9) {
-                        gummybear = true;
-                    }
-                    if(outfitArray[i].augment.id == 10) {
-                        redDragonEye = true;
-                    }
-                    if(outfitArray[i].augment.id == 11) {
-                        seedsofpower = true;
-                    }
-                    if(outfitArray[i].augment.id == 12) {
-                        smarties = true;
-                    }
-                    if(outfitArray[i].augment.id == 13) {
-                        whiteDragonEye = true;
-                    }
-                    if(outfitArray[i].augment.id == 28){
-                        shardofenergy = true;
-                    }
-                }
+                generateAugment(this, outfitArray[i]);
             }
             if(outfitArray[i].hasAugmentWOS()){
-                do{
-                    outfitArray[i].augmentWOS = new Augment(false, true);
-                }while((outfitArray[i].augmentWOS.id == 18 && bulwarkDiamond) || (outfitArray[i].augmentWOS.id == 19 && burningOpal) ||
-                        (outfitArray[i].augmentWOS.id == 20 && criticalPearl) || (outfitArray[i].augmentWOS.id == 21 && enduringPeridot) ||
-                        (outfitArray[i].augmentWOS.id == 22 && evasiveBloodstone) || (outfitArray[i].augmentWOS.id == 23 && flowingShappire) ||
-                        (outfitArray[i].augmentWOS.id == 24 && focusedJasper) || (outfitArray[i].augmentWOS.id == 25 && furiousOnyx) ||
-                        (outfitArray[i].augmentWOS.id == 26 && ragingFirestone) || (outfitArray[i].augmentWOS.id == 27 && reachingCatsEye));
-                if(outfitArray[i].augmentWOS.isLore()){
-                    //flip boolean flag
-                    if(outfitArray[i].augmentWOS.id == 18) {
-                        bulwarkDiamond = true;
-                    }
-                    if(outfitArray[i].augmentWOS.id == 19) {
-                        burningOpal = true;
-                    }
-                    if(outfitArray[i].augmentWOS.id == 20) {
-                        criticalPearl = true;
-                    }
-                    if(outfitArray[i].augmentWOS.id == 21) {
-                        enduringPeridot = true;
-                    }
-                    if(outfitArray[i].augmentWOS.id == 22) {
-                        evasiveBloodstone = true;
-                    }
-                    if(outfitArray[i].augmentWOS.id == 23) {
-                        flowingShappire = true;
-                    }
-                    if(outfitArray[i].augmentWOS.id == 24) {
-                        focusedJasper = true;
-                    }
-                    if(outfitArray[i].augmentWOS.id == 25) {
-                        furiousOnyx = true;
-                    }
-                    if(outfitArray[i].augmentWOS.id == 26) {
-                        ragingFirestone = true;
-                    }
-                    if(outfitArray[i].augmentWOS.id == 27) {
-                        reachingCatsEye = true;
-                    }
-                }
+                generateAugmentWOS(this, outfitArray[i]);
             }
         }
     }
@@ -247,6 +169,73 @@ public class Outfit {
             }
         }
     }
+
+    public void generateAugmentWOS(Outfit inOutfit, Equipment inEquipment){
+        do{
+            inEquipment.augmentWOS = new Augment(false, true);
+        }while((inEquipment.augmentWOS.id == 18 && inOutfit.bulwarkDiamond) || (inEquipment.augmentWOS.id == 19 && inOutfit.burningOpal) ||
+                (inEquipment.augmentWOS.id == 20 && inOutfit.criticalPearl) || (inEquipment.augmentWOS.id == 21 && inOutfit.enduringPeridot) ||
+                (inEquipment.augmentWOS.id == 22 && inOutfit.evasiveBloodstone) || (inEquipment.augmentWOS.id == 23 && inOutfit.flowingShappire) ||
+                (inEquipment.augmentWOS.id == 24 && inOutfit.focusedJasper) || (inEquipment.augmentWOS.id == 25 && inOutfit.furiousOnyx) ||
+                (inEquipment.augmentWOS.id == 26 && inOutfit.ragingFirestone) || (inEquipment.augmentWOS.id == 27 && inOutfit.reachingCatsEye));
+        if(inEquipment.augmentWOS.isLore()){
+            //flip boolean flag
+            if(inEquipment.augmentWOS.id == 18) {
+                inOutfit.bulwarkDiamond = true;
+            }
+            if(inEquipment.augmentWOS.id == 19) {
+                inOutfit.burningOpal = true;
+            }
+            if(inEquipment.augmentWOS.id == 20) {
+                inOutfit.criticalPearl = true;
+            }
+            if(inEquipment.augmentWOS.id == 21) {
+                inOutfit.enduringPeridot = true;
+            }
+            if(inEquipment.augmentWOS.id == 22) {
+                inOutfit.evasiveBloodstone = true;
+            }
+            if(inEquipment.augmentWOS.id == 23) {
+                inOutfit.flowingShappire = true;
+            }
+            if(inEquipment.augmentWOS.id == 24) {
+                inOutfit.focusedJasper = true;
+            }
+            if(inEquipment.augmentWOS.id == 25) {
+                inOutfit.furiousOnyx = true;
+            }
+            if(inEquipment.augmentWOS.id == 26) {
+                inOutfit.ragingFirestone = true;
+            }
+            if(inEquipment.augmentWOS.id == 27) {
+                inOutfit.reachingCatsEye = true;
+            }
+        }
+    }
+
+    public void resetLore(){
+        this.blackDragonEye = false;
+        this.blueDragonEye = false;
+        this.greenDragonEye = false;
+        this.redDragonEye = false;
+        this.whiteDragonEye = false;
+        this.candycorn = false;
+        this.gummybear = false;
+        this.smarties = false;
+        this.seedsofpower = false;
+        this.shardofenergy = false;
+        this.bulwarkDiamond = false;
+        this.burningOpal = false;
+        this.criticalPearl = false;
+        this.enduringPeridot = false;
+        this.evasiveBloodstone = false;
+        this.flowingShappire = false;
+        this.focusedJasper = false;
+        this.furiousOnyx = false;
+        this.ragingFirestone = false;
+        this. reachingCatsEye = false;
+    }
+
     @Override
     public String toString() {
         String returnString;

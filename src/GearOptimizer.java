@@ -1,18 +1,56 @@
+import java.util.ArrayList;
+import java.util.Random;
+
 public class GearOptimizer {
+    double mutationFactor = 1.0;
     public static void main(String[] args) {
-        int populationSize = 500;
-        Character[] population;
-        population = new Character[populationSize];
+        int populationSize = 50000;
+        /*
+        Character[] population = new Character[populationSize];
         generate_population(population);
         for(int i = 0; i < population.length; ++i){
             fitness(population[i]);
         }
+        */
+        ArrayList<Character> population = new ArrayList<Character>();
+        for(int i = 0; i < populationSize; ++i){
+            Character temp = new Character();
+            temp.fitness = fitness(temp);
+            population.add(new Character());
+        }
+        System.out.println(population.get(0).outfit);
     }
 
     public static void generate_population(Character[] inPopulation){
         for(int i = 0; i < inPopulation.length; ++i){
             inPopulation[i] = new Character();
         }
+    }
+
+    public static ArrayList<Character> next_generation(ArrayList<Character> inPopulation){
+        int sectionSize = inPopulation.size() / 10;
+        ArrayList<Character> breededPopulation = new ArrayList<Character>();
+
+        for(int i = 0; i < 18; ++i){
+
+
+        }
+
+
+        return inPopulation;
+    }
+
+    public static Character crossover_breed(Character a, Character b){
+        Character offspring = new Character();
+        offspring.outfit.resetLore();
+        Random rand = new Random();
+        for(int i = 0; i < offspring.outfit.outfitArray.length-4; ++i){
+            double temp = rand.nextDouble();
+            if(temp < 0.5){
+                // this is where I go to bed and think this over
+            }
+        }
+        return offspring;
     }
 
     public static double fitness(Character inCharacter){
@@ -175,8 +213,12 @@ public class GearOptimizer {
             evaluated_spellDamage += inCharacter.outfit.outfitArray[i].spellDamage;
             evaluated_clairvoyance += inCharacter.outfit.outfitArray[i].clairvoyance;
             evaluated_combateffects += inCharacter.outfit.outfitArray[i].combateffects;
-            evaluated_haste += inCharacter.outfit.outfitArray[i].haste;
-            evaluated_hastev3 += inCharacter.outfit.outfitArray[i].hastev3;
+            if(evaluated_haste < inCharacter.outfit.outfitArray[i].haste){
+                evaluated_haste = inCharacter.outfit.outfitArray[i].haste;
+            }
+            if(evaluated_hastev3 < inCharacter.outfit.outfitArray[i].hastev3){
+                evaluated_hastev3 = inCharacter.outfit.outfitArray[i].hastev3;
+            }
             evaluated_skillDodge += inCharacter.outfit.outfitArray[i].skillDodge;
             evaluated_skillSafeFall += inCharacter.outfit.outfitArray[i].skillSafeFall;
             evaluated_skillDefense += inCharacter.outfit.outfitArray[i].skillDefense;

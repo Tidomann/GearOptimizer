@@ -1,4 +1,4 @@
-public class Character {
+public class Character implements Comparable<Character> {
     double fitness = 0;
     //Character Data Fields
     String characterClass = "Ranger";
@@ -66,5 +66,15 @@ public class Character {
 
     public Character() {
         outfit = new Outfit();
+    }
+
+    @Override
+    public int compareTo(Character c) {
+        if(fitness == c.fitness)
+            return 0;
+        else if(fitness > c.fitness)
+            return 1;
+        else
+            return -1;
     }
 }

@@ -268,6 +268,7 @@ public class Augment extends Equipment{
     public Augment(Augment inAugment){
         name = inAugment.name;
         id = inAugment.id;
+        lore = inAugment.lore;
         hasAugment = inAugment.hasAugment;
         augment = inAugment.augment;
         hasAugmentWOS = inAugment.hasAugmentWOS;
