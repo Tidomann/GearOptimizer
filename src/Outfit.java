@@ -78,8 +78,8 @@ public class Outfit {
         }
         legs = new Legs(-1);
         hands = new Hands(-1);
-        //boots;
-        ring1 = new Ring(0);
+        boots = new Boots(-1);
+        ring1 = new Ring(-1);
         if(ring1.isLore()){
             do{
                 ring2 = new Ring(-1);
@@ -91,7 +91,6 @@ public class Outfit {
         secondary = new Secondary(-1);
         ranged = new Ranged(-1);
         charm = new Charm(-1);
-        boots = new Boots(-1);
         outfitArray[0] = ear1;
         outfitArray[1] = ear2;
         outfitArray[2] = head;
@@ -123,6 +122,11 @@ public class Outfit {
             }
             if(outfitArray[i].hasAugmentWOS()){
                 generateAugmentWOS(this, outfitArray[i]);
+            }
+            if(i == 15 || i == 16){
+                if(((Ring) outfitArray[i]).hasAugment2()){
+                    generateAugment2(this, (Ring) outfitArray[i]);
+                }
             }
         }
     }
@@ -165,6 +169,49 @@ public class Outfit {
                 inOutfit.whiteDragonEye = true;
             }
             if(inEquipment.augment.id == 28){
+                inOutfit.shardofenergy = true;
+            }
+        }
+    }
+
+    public void generateAugment2(Outfit inOutfit, Ring inRing){
+        do{
+            inRing.augment2 = new Augment(true, false);
+        }while((inRing.augment2.id == 1 && inOutfit.blackDragonEye) || (inRing.augment2.id == 2 && inOutfit.blueDragonEye) ||
+                (inRing.augment2.id == 3 && inOutfit.candycorn) || (inRing.augment2.id == 8 && inOutfit.greenDragonEye) ||
+                (inRing.augment2.id == 9 && inOutfit.gummybear) || (inRing.augment2.id == 10 && inOutfit.redDragonEye) ||
+                (inRing.augment2.id == 11 && inOutfit.seedsofpower) || (inRing.augment2.id == 12 && inOutfit.smarties) ||
+                (inRing.augment2.id == 13 && inOutfit.whiteDragonEye) || (inRing.augment2.id == 28 && inOutfit.shardofenergy));
+        if(inRing.augment2.isLore()){
+            //flip boolean flag
+            if(inRing.augment2.id == 1) {
+                inOutfit.blackDragonEye = true;
+            }
+            if(inRing.augment2.id == 2) {
+                inOutfit.blueDragonEye= true;
+            }
+            if(inRing.augment2.id == 3) {
+                inOutfit.candycorn = true;
+            }
+            if(inRing.augment2.id == 8) {
+                inOutfit.greenDragonEye = true;
+            }
+            if(inRing.augment2.id == 9) {
+                inOutfit.gummybear = true;
+            }
+            if(inRing.augment2.id == 10) {
+                inOutfit.redDragonEye = true;
+            }
+            if(inRing.augment2.id == 11) {
+                inOutfit.seedsofpower = true;
+            }
+            if(inRing.augment2.id == 12) {
+                inOutfit.smarties = true;
+            }
+            if(inRing.augment2.id == 13) {
+                inOutfit.whiteDragonEye = true;
+            }
+            if(inRing.augment2.id == 28){
                 inOutfit.shardofenergy = true;
             }
         }
@@ -234,6 +281,188 @@ public class Outfit {
         this.furiousOnyx = false;
         this.ragingFirestone = false;
         this. reachingCatsEye = false;
+    }
+
+    public void checkAugment(Outfit inOutfit, Equipment inEquipment){
+        //Check if there is a lore conflict
+        if((inEquipment.augment.id == 1 && inOutfit.blackDragonEye) || (inEquipment.augment.id == 2 && inOutfit.blueDragonEye) ||
+                (inEquipment.augment.id == 3 && inOutfit.candycorn) || (inEquipment.augment.id == 8 && inOutfit.greenDragonEye) ||
+                (inEquipment.augment.id == 9 && inOutfit.gummybear) || (inEquipment.augment.id == 10 && inOutfit.redDragonEye) ||
+                (inEquipment.augment.id == 11 && inOutfit.seedsofpower) || (inEquipment.augment.id == 12 && inOutfit.smarties) ||
+                (inEquipment.augment.id == 13 && inOutfit.whiteDragonEye) || (inEquipment.augment.id == 28 && inOutfit.shardofenergy)){
+            // Lore Augment Conflict
+            generateAugment(inOutfit, inEquipment);
+        }else{ //no lore conflict but must still make sure flags are handled
+            if(inEquipment.augment.isLore()){
+                //flip boolean flag
+                if(inEquipment.augment.id == 1) {
+                    inOutfit.blackDragonEye = true;
+                }
+                if(inEquipment.augment.id == 2) {
+                    inOutfit.blueDragonEye= true;
+                }
+                if(inEquipment.augment.id == 3) {
+                    inOutfit.candycorn = true;
+                }
+                if(inEquipment.augment.id == 8) {
+                    inOutfit.greenDragonEye = true;
+                }
+                if(inEquipment.augment.id == 9) {
+                    inOutfit.gummybear = true;
+                }
+                if(inEquipment.augment.id == 10) {
+                    inOutfit.redDragonEye = true;
+                }
+                if(inEquipment.augment.id == 11) {
+                    inOutfit.seedsofpower = true;
+                }
+                if(inEquipment.augment.id == 12) {
+                    inOutfit.smarties = true;
+                }
+                if(inEquipment.augment.id == 13) {
+                    inOutfit.whiteDragonEye = true;
+                }
+                if(inEquipment.augment.id == 28){
+                    inOutfit.shardofenergy = true;
+                }
+            }
+        }
+    }
+
+    public void checkAugmentWOS(Outfit inOutfit, Equipment inEquipment){
+        //Check if there is a lore conflict
+        if((inEquipment.augmentWOS.id == 18 && inOutfit.bulwarkDiamond) || (inEquipment.augmentWOS.id == 19 && inOutfit.burningOpal) ||
+                (inEquipment.augmentWOS.id == 20 && inOutfit.criticalPearl) || (inEquipment.augmentWOS.id == 21 && inOutfit.enduringPeridot) ||
+                (inEquipment.augmentWOS.id == 22 && inOutfit.evasiveBloodstone) || (inEquipment.augmentWOS.id == 23 && inOutfit.flowingShappire) ||
+                (inEquipment.augmentWOS.id == 24 && inOutfit.focusedJasper) || (inEquipment.augmentWOS.id == 25 && inOutfit.furiousOnyx) ||
+                (inEquipment.augmentWOS.id == 26 && inOutfit.ragingFirestone) || (inEquipment.augmentWOS.id == 27 && inOutfit.reachingCatsEye)){
+            // Lore Augment Conflict
+            generateAugmentWOS(inOutfit, inEquipment);
+        }else{ //no lore conflict but must still make sure flags are handled
+            if(inEquipment.augmentWOS.isLore()){
+                //flip boolean flag
+                if(inEquipment.augmentWOS.id == 18) {
+                    inOutfit.bulwarkDiamond = true;
+                }
+                if(inEquipment.augmentWOS.id == 19) {
+                    inOutfit.burningOpal = true;
+                }
+                if(inEquipment.augmentWOS.id == 20) {
+                    inOutfit.criticalPearl = true;
+                }
+                if(inEquipment.augmentWOS.id == 21) {
+                    inOutfit.enduringPeridot = true;
+                }
+                if(inEquipment.augmentWOS.id == 22) {
+                    inOutfit.evasiveBloodstone = true;
+                }
+                if(inEquipment.augmentWOS.id == 23) {
+                    inOutfit.flowingShappire = true;
+                }
+                if(inEquipment.augmentWOS.id == 24) {
+                    inOutfit.focusedJasper = true;
+                }
+                if(inEquipment.augmentWOS.id == 25) {
+                    inOutfit.furiousOnyx = true;
+                }
+                if(inEquipment.augmentWOS.id == 26) {
+                    inOutfit.ragingFirestone = true;
+                }
+                if(inEquipment.augmentWOS.id == 27) {
+                    inOutfit.reachingCatsEye = true;
+                }
+            }
+        }
+    }
+
+    public void checkAugmentRing(Outfit inOutfit, Ring inRing){
+        //Check if there is a lore conflict
+        if((inRing.augment.id == 1 && inOutfit.blackDragonEye) || (inRing.augment.id == 2 && inOutfit.blueDragonEye) ||
+                (inRing.augment.id == 3 && inOutfit.candycorn) || (inRing.augment.id == 8 && inOutfit.greenDragonEye) ||
+                (inRing.augment.id == 9 && inOutfit.gummybear) || (inRing.augment.id == 10 && inOutfit.redDragonEye) ||
+                (inRing.augment.id == 11 && inOutfit.seedsofpower) || (inRing.augment.id == 12 && inOutfit.smarties) ||
+                (inRing.augment.id == 13 && inOutfit.whiteDragonEye) || (inRing.augment.id == 28 && inOutfit.shardofenergy)){
+            // Lore Augment Conflict
+            generateAugment(inOutfit, inRing);
+        }else{ //no lore conflict but must still make sure flags are handled
+            if(inRing.augment.isLore()){
+                //flip boolean flag
+                if(inRing.augment.id == 1) {
+                    inOutfit.blackDragonEye = true;
+                }
+                if(inRing.augment.id == 2) {
+                    inOutfit.blueDragonEye= true;
+                }
+                if(inRing.augment.id == 3) {
+                    inOutfit.candycorn = true;
+                }
+                if(inRing.augment.id == 8) {
+                    inOutfit.greenDragonEye = true;
+                }
+                if(inRing.augment.id == 9) {
+                    inOutfit.gummybear = true;
+                }
+                if(inRing.augment.id == 10) {
+                    inOutfit.redDragonEye = true;
+                }
+                if(inRing.augment.id == 11) {
+                    inOutfit.seedsofpower = true;
+                }
+                if(inRing.augment.id == 12) {
+                    inOutfit.smarties = true;
+                }
+                if(inRing.augment.id == 13) {
+                    inOutfit.whiteDragonEye = true;
+                }
+                if(inRing.augment.id == 28){
+                    inOutfit.shardofenergy = true;
+                }
+            }
+        }
+        if(inRing.hasAugment2()){
+            if((inRing.augment2.id == 1 && inOutfit.blackDragonEye) || (inRing.augment2.id == 2 && inOutfit.blueDragonEye) ||
+                    (inRing.augment2.id == 3 && inOutfit.candycorn) || (inRing.augment2.id == 8 && inOutfit.greenDragonEye) ||
+                    (inRing.augment2.id == 9 && inOutfit.gummybear) || (inRing.augment2.id == 10 && inOutfit.redDragonEye) ||
+                    (inRing.augment2.id == 11 && inOutfit.seedsofpower) || (inRing.augment2.id == 12 && inOutfit.smarties) ||
+                    (inRing.augment2.id == 13 && inOutfit.whiteDragonEye) || (inRing.augment2.id == 28 && inOutfit.shardofenergy)){
+                // Lore Augment Conflict
+                generateAugment(inOutfit, inRing);
+            }else{ //no lore conflict but must still make sure flags are handled
+                if(inRing.augment2.isLore()){
+                    //flip boolean flag
+                    if(inRing.augment2.id == 1) {
+                        inOutfit.blackDragonEye = true;
+                    }
+                    if(inRing.augment2.id == 2) {
+                        inOutfit.blueDragonEye= true;
+                    }
+                    if(inRing.augment2.id == 3) {
+                        inOutfit.candycorn = true;
+                    }
+                    if(inRing.augment2.id == 8) {
+                        inOutfit.greenDragonEye = true;
+                    }
+                    if(inRing.augment2.id == 9) {
+                        inOutfit.gummybear = true;
+                    }
+                    if(inRing.augment2.id == 10) {
+                        inOutfit.redDragonEye = true;
+                    }
+                    if(inRing.augment2.id == 11) {
+                        inOutfit.seedsofpower = true;
+                    }
+                    if(inRing.augment2.id == 12) {
+                        inOutfit.smarties = true;
+                    }
+                    if(inRing.augment2.id == 13) {
+                        inOutfit.whiteDragonEye = true;
+                    }
+                    if(inRing.augment2.id == 28){
+                        inOutfit.shardofenergy = true;
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -348,12 +577,18 @@ public class Outfit {
         if(ring1.hasAugment()){
             returnString = returnString + "\n" + "---" + ring1.augment.name;
         }
+        if(((Ring)ring1).hasAugment2()){
+            returnString = returnString + "\n" + "---" + ((Ring) ring1).augment2.name;
+        }
         if(ring1.hasAugmentWOS()){
             returnString = returnString + "\n" + "---" + ring1.augmentWOS.name;
         }
         returnString = returnString + "\n" + ring2.name;
         if(ring2.hasAugment()){
             returnString = returnString + "\n" + "---" + ring2.augment.name;
+        }
+        if(((Ring)ring2).hasAugment2()){
+            returnString = returnString + "\n" + "---" + ((Ring) ring2).augment2.name;
         }
         if(ring2.hasAugmentWOS()){
             returnString = returnString + "\n" + "---" + ring2.augmentWOS.name;

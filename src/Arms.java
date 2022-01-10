@@ -179,9 +179,13 @@ public class Arms extends Equipment{
         name = inArms.name;
         id = inArms.id;
         hasAugment = inArms.hasAugment;
-        augment = inArms.augment;
+        if(hasAugment && inArms.augment != null){
+            augment = new Augment((Augment) inArms.augment);
+        }
         hasAugmentWOS = inArms.hasAugmentWOS;
-        augmentWOS = inArms.augmentWOS;
+        if(hasAugmentWOS && inArms.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inArms.augmentWOS);
+        }
         bonusAC = inArms.bonusAC;
         bonusHP = inArms.bonusHP;
         bonusMana = inArms.bonusMana;

@@ -114,9 +114,13 @@ public class Ear extends Equipment{
         id = inEar.id;
         lore = inEar.lore;
         hasAugment = inEar.hasAugment;
-        augment = inEar.augment;
+        if(hasAugment && inEar.augment != null){
+            augment = new Augment((Augment) inEar.augment);
+        }
         hasAugmentWOS = inEar.hasAugmentWOS;
-        augmentWOS = inEar.augmentWOS;
+        if(hasAugmentWOS && inEar.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inEar.augmentWOS);
+        }
         bonusAC = inEar.bonusAC;
         bonusHP = inEar.bonusHP;
         bonusMana = inEar.bonusMana;

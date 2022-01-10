@@ -100,9 +100,13 @@ public class Hands extends Equipment{
         name = inHands.name;
         id = inHands.id;
         hasAugment = inHands.hasAugment;
-        augment = inHands.augment;
+        if(hasAugment && inHands.augment != null){
+            augment = new Augment((Augment) inHands.augment);
+        }
         hasAugmentWOS = inHands.hasAugmentWOS;
-        augmentWOS = inHands.augmentWOS;
+        if(hasAugmentWOS && inHands.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inHands.augmentWOS);
+        }
         bonusAC = inHands.bonusAC;
         bonusHP = inHands.bonusHP;
         bonusMana = inHands.bonusMana;

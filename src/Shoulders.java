@@ -190,9 +190,13 @@ public class Shoulders extends Equipment{
         name = inShoulders.name;
         id = inShoulders.id;
         hasAugment = inShoulders.hasAugment;
-        augment = inShoulders.augment;
+        if(hasAugment && inShoulders.augment != null){
+            augment = new Augment((Augment) inShoulders.augment);
+        }
         hasAugmentWOS = inShoulders.hasAugmentWOS;
-        augmentWOS = inShoulders.augmentWOS;
+        if(hasAugmentWOS && inShoulders.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inShoulders.augmentWOS);
+        }
         bonusAC = inShoulders.bonusAC;
         bonusHP = inShoulders.bonusHP;
         bonusMana = inShoulders.bonusMana;

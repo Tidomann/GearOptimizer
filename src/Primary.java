@@ -101,9 +101,13 @@ public class Primary extends Equipment{
         name = inPrimary.name;
         id = inPrimary.id;
         hasAugment = inPrimary.hasAugment;
-        augment = inPrimary.augment;
+        if(hasAugment && inPrimary.augment != null){
+            augment = new Augment((Augment) inPrimary.augment);
+        }
         hasAugmentWOS = inPrimary.hasAugmentWOS;
-        augmentWOS = inPrimary.augmentWOS;
+        if(hasAugmentWOS && inPrimary.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inPrimary.augmentWOS);
+        }
         bonusAC = inPrimary.bonusAC;
         bonusHP = inPrimary.bonusHP;
         bonusMana = inPrimary.bonusMana;

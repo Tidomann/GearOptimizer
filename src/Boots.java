@@ -164,9 +164,13 @@ public class Boots extends Equipment{
         name = inBoots.name;
         id = inBoots.id;
         hasAugment = inBoots.hasAugment;
-        augment = inBoots.augment;
+        if(hasAugment && inBoots.augment != null){
+            augment = new Augment((Augment) inBoots.augment);
+        }
         hasAugmentWOS = inBoots.hasAugmentWOS;
-        augmentWOS = inBoots.augmentWOS;
+        if(hasAugmentWOS && inBoots.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inBoots.augmentWOS);
+        }
         bonusAC = inBoots.bonusAC;
         bonusHP = inBoots.bonusHP;
         bonusMana = inBoots.bonusMana;

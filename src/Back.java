@@ -170,9 +170,13 @@ public class Back extends Equipment{
         name = inBack.name;
         id = inBack.id;
         hasAugment = inBack.hasAugment;
-        augment = inBack.augment;
+        if(hasAugment && inBack.augment != null){
+            augment = new Augment((Augment) inBack.augment);
+        }
         hasAugmentWOS = inBack.hasAugmentWOS;
-        augmentWOS = inBack.augmentWOS;
+        if(hasAugmentWOS && inBack.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inBack.augmentWOS);
+        }
         bonusAC = inBack.bonusAC;
         bonusHP = inBack.bonusHP;
         bonusMana = inBack.bonusMana;

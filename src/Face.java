@@ -201,6 +201,7 @@ public class Face extends Equipment{
                 attack = 5;
                 endRegen = 1;
                 hasAugment = true;
+                break;
         }
     }
 
@@ -208,9 +209,13 @@ public class Face extends Equipment{
         name = inFace.name;
         id = inFace.id;
         hasAugment = inFace.hasAugment;
-        augment = inFace.augment;
+        if(hasAugment && inFace.augment != null){
+            augment = new Augment((Augment) inFace.augment);
+        }
         hasAugmentWOS = inFace.hasAugmentWOS;
-        augmentWOS = inFace.augmentWOS;
+        if(hasAugmentWOS && inFace.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inFace.augmentWOS);
+        }
         bonusAC = inFace.bonusAC;
         bonusHP = inFace.bonusHP;
         bonusMana = inFace.bonusMana;

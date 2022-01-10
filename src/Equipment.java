@@ -138,5 +138,4 @@ abstract class Equipment {
     public boolean hasAugmentWOS(){
         return this.hasAugmentWOS;
     }
-
 }

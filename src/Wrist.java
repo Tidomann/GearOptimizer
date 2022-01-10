@@ -220,9 +220,13 @@ public class Wrist extends Equipment{
         id = inWrist.id;
         lore = inWrist.lore;
         hasAugment = inWrist.hasAugment;
-        augment = inWrist.augment;
+        if(hasAugment && inWrist.augment != null){
+            augment = new Augment((Augment) inWrist.augment);
+        }
         hasAugmentWOS = inWrist.hasAugmentWOS;
-        augmentWOS = inWrist.augmentWOS;
+        if(hasAugmentWOS && inWrist.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inWrist.augmentWOS);
+        }
         bonusAC = inWrist.bonusAC;
         bonusHP = inWrist.bonusHP;
         bonusMana = inWrist.bonusMana;

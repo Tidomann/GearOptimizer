@@ -192,9 +192,13 @@ public class Head extends Equipment{
         name = inHead.name;
         id = inHead.id;
         hasAugment = inHead.hasAugment;
-        augment = inHead.augment;
+        if(hasAugment && inHead.augment != null){
+            augment = new Augment((Augment) inHead.augment);
+        }
         hasAugmentWOS = inHead.hasAugmentWOS;
-        augmentWOS = inHead.augmentWOS;
+        if(hasAugmentWOS && inHead.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inHead.augmentWOS);
+        }
         bonusAC = inHead.bonusAC;
         bonusHP = inHead.bonusHP;
         bonusMana = inHead.bonusMana;

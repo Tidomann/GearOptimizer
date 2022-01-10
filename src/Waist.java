@@ -199,9 +199,13 @@ public class Waist extends Equipment{
         name = inWaist.name;
         id = inWaist.id;
         hasAugment = inWaist.hasAugment;
-        augment = inWaist.augment;
+        if(hasAugment && inWaist.augment != null){
+            augment = new Augment((Augment) inWaist.augment);
+        }
         hasAugmentWOS = inWaist.hasAugmentWOS;
-        augmentWOS = inWaist.augmentWOS;
+        if(hasAugmentWOS && inWaist.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inWaist.augmentWOS);
+        }
         bonusAC = inWaist.bonusAC;
         bonusHP = inWaist.bonusHP;
         bonusMana = inWaist.bonusMana;

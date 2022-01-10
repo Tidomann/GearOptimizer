@@ -69,9 +69,13 @@ public class Charm extends Equipment{
         name = inSecondary.name;
         id = inSecondary.id;
         hasAugment = inSecondary.hasAugment;
-        augment = inSecondary.augment;
+        if(hasAugment && inSecondary.augment != null){
+            augment = new Augment((Augment) inSecondary.augment);
+        }
         hasAugmentWOS = inSecondary.hasAugmentWOS;
-        augmentWOS = inSecondary.augmentWOS;
+        if(hasAugmentWOS && inSecondary.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inSecondary.augmentWOS);
+        }
         bonusAC = inSecondary.bonusAC;
         bonusHP = inSecondary.bonusHP;
         bonusMana = inSecondary.bonusMana;

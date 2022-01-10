@@ -210,6 +210,7 @@ public class Neck extends Equipment{
                 healAmount = 1;
                 spellDamage = 1;
                 hasAugment = true;
+                break;
         }
     }
 
@@ -217,9 +218,13 @@ public class Neck extends Equipment{
         name = inNeck.name;
         id = inNeck.id;
         hasAugment = inNeck.hasAugment;
-        augment = inNeck.augment;
+        if(hasAugment && inNeck.augment != null){
+            augment = new Augment((Augment) inNeck.augment);
+        }
         hasAugmentWOS = inNeck.hasAugmentWOS;
-        augmentWOS = inNeck.augmentWOS;
+        if(hasAugmentWOS && inNeck.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inNeck.augmentWOS);
+        }
         bonusAC = inNeck.bonusAC;
         bonusHP = inNeck.bonusHP;
         bonusMana = inNeck.bonusMana;

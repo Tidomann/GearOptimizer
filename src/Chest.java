@@ -205,9 +205,13 @@ public class Chest extends Equipment{
         name = inChest.name;
         id = inChest.id;
         hasAugment = inChest.hasAugment;
-        augment = inChest.augment;
+        if(hasAugment && inChest.augment != null){
+            augment = new Augment((Augment) inChest.augment);
+        }
         hasAugmentWOS = inChest.hasAugmentWOS;
-        augmentWOS = inChest.augmentWOS;
+        if(hasAugmentWOS && inChest.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inChest.augmentWOS);
+        }
         bonusAC = inChest.bonusAC;
         bonusHP = inChest.bonusHP;
         bonusMana = inChest.bonusMana;

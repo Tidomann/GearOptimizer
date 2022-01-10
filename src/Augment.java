@@ -270,9 +270,13 @@ public class Augment extends Equipment{
         id = inAugment.id;
         lore = inAugment.lore;
         hasAugment = inAugment.hasAugment;
-        augment = inAugment.augment;
+        if(hasAugment && inAugment.augment != null){
+            augment = inAugment.augment;
+        }
         hasAugmentWOS = inAugment.hasAugmentWOS;
-        augmentWOS = inAugment.augmentWOS;
+        if(hasAugmentWOS && inAugment.augmentWOS != null){
+            augmentWOS = inAugment.augmentWOS;
+        }
         bonusAC = inAugment.bonusAC;
         bonusHP = inAugment.bonusHP;
         bonusMana = inAugment.bonusMana;

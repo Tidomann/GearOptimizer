@@ -1,7 +1,9 @@
 import java.util.Random;
 
 public class Ring extends Equipment{
-    int max = 4;
+    int max = 5;
+    boolean hasAugment2;
+    Equipment augment2;
 
     public Ring(int randomRing){
         if (randomRing < 0 || randomRing >= max){
@@ -107,6 +109,31 @@ public class Ring extends Equipment{
                 strikeThrough = 2;
                 hasAugment = true;
                 hasAugmentWOS = true;
+                break;
+            case 4:
+                name="Charred Jasper Ring";
+                id = 4;
+                classAll = true;
+                bonusHP = 20;
+                bonusMana = 20;
+                bonusEnd = 20;
+                haste = 17;
+                strength = 15;
+                heroicStrength = 1;
+                intelligence = 15;
+                heroicIntelligence = 1;
+                wisdom = 15;
+                heroicWisdom = 1;
+                dexterity = 15;
+                heroicDexterity = 1;
+                charisma = 8;
+                heroicCharisma = 8;
+                damageShield = 3;
+                spellDamage = 3;
+                healAmount = 3;
+                hasAugment = true;
+                hasAugment2 = true;
+                break;
         }
     }
 
@@ -115,9 +142,17 @@ public class Ring extends Equipment{
         id = inRing.id;
         lore = inRing.lore;
         hasAugment = inRing.hasAugment;
-        augment = inRing.augment;
+        if(hasAugment && inRing.augment != null){
+            augment = new Augment((Augment) inRing.augment);
+        }
+        hasAugment2 = inRing.hasAugment2;
+        if(hasAugment2 && inRing.augment2 != null){
+            augment2 = new Augment((Augment) inRing.augment2);
+        }
         hasAugmentWOS = inRing.hasAugmentWOS;
-        augmentWOS = inRing.augmentWOS;
+        if(hasAugmentWOS && inRing.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inRing.augmentWOS);
+        }
         bonusAC = inRing.bonusAC;
         bonusHP = inRing.bonusHP;
         bonusMana = inRing.bonusMana;
@@ -184,5 +219,8 @@ public class Ring extends Equipment{
 
     public boolean isLore(){
         return this.lore;
+    }
+    public boolean hasAugment2(){
+        return this.hasAugment2;
     }
 }

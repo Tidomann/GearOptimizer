@@ -106,9 +106,13 @@ public class Legs extends Equipment{
         name = inLegs.name;
         id = inLegs.id;
         hasAugment = inLegs.hasAugment;
-        augment = inLegs.augment;
+        if(hasAugment && inLegs.augment != null){
+            augment = new Augment((Augment) inLegs.augment);
+        }
         hasAugmentWOS = inLegs.hasAugmentWOS;
-        augmentWOS = inLegs.augmentWOS;
+        if(hasAugmentWOS && inLegs.augmentWOS != null){
+            augmentWOS = new Augment((Augment) inLegs.augmentWOS);
+        }
         bonusAC = inLegs.bonusAC;
         bonusHP = inLegs.bonusHP;
         bonusMana = inLegs.bonusMana;
