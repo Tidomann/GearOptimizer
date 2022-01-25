@@ -1,4 +1,9 @@
+/**
+ * The character class defines the attributes of a character, setting the class restriction and holding
+ * a potential outfit solution.
+ */
 public class Character implements Comparable<Character> {
+    //Separating a character class allows different solutions to be generated for each person's unique character
     double fitness = 0;
     //Character Data Fields
     String characterClass = "Ranger";

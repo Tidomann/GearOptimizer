@@ -1,13 +1,33 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Random;
 
+/**
+ * Gear Optimizer is an attempt at creating a genetic algorithm that will generate a set of equipment
+ * for a character. Each generation will attempt to find a better set of equipment. Parents are selected to breed
+ * randomly using a boxing method. Each slot will randomly be passed down as there is no linear progression to be
+ * assumed. Mutation has a chance to randomly selected a new piece of equipment to occupy that slot.
+ *
+ * Constraints: Certain equipment that has multiple slots (Wrists, earrings, rings) have a lore attribute, meaning
+ * the outfit cannot contain two copies of that equipment. Each equipment has a "slot" for an augment that can be
+ * inserted into that slot. There are currently two different types of augment slots with specific augments that
+ * can be used in each. Some augments are also "lore" meaning only one can be used in the entire outfit.
+ *
+ * Additional constraints (such as some equipment being specific to a character's class) has not been implemented at
+ * this time.
+ * @author Tidomann
+ */
 public class GearOptimizer {
     public static void main(String[] args) {
-        double mutationFactor = 10.0;
+        //Algorithm Settings
+        double mutationFactor = 1.0;
         int populationSize = 500;
-        int generations = 1000;
+        int generations = 100;
+
+        //Testing algorithm runtime
         long start = System.nanoTime();
+
         ArrayList<Character> population = new ArrayList<Character>();
         population = generate_population(population, populationSize);
         double max = 0.0;
@@ -25,11 +45,15 @@ public class GearOptimizer {
                 max = population.get(0).fitness;
                 System.out.println("New Max Found - " + max);
             }
+            //Periodically update console of progress every 100 generations
             if(i%100 == 0){
-                System.out.println("At Generation: "+ i);
+                System.out.println("Currently testing Generation: "+ i);
             }
         }
+        //Display best outfit
         System.out.println(population.get(0).outfit);
+
+        //Ensure no outfit is better than our max
         for(int i = 0; i < population.size(); ++i){
             if(max < population.get(i).fitness){
                 System.out.println("debug time");
@@ -37,11 +61,19 @@ public class GearOptimizer {
         }
         printStats(population.get(0));
         long end= System.nanoTime();
+        //Concert nanoseconds to seconds and display to console
         System.out.print("Program took:" + (end - start)/1000000000 + "seconds");
 
     }
 
+    /**
+     * Function to generate an initial population and set their fitness values
+     * @param inPopulation the array to populate
+     * @param populationSize the size of the population to generate
+     * @return the population array with generated solutions
+     */
     public static ArrayList<Character> generate_population(ArrayList<Character> inPopulation, int populationSize){
+        inPopulation.ensureCapacity(populationSize);
         for(int i = 0; i < populationSize; ++i){
             Character temp = new Character();
             temp.fitness = fitness(temp);
@@ -50,32 +82,40 @@ public class GearOptimizer {
         return inPopulation;
     }
 
+    /**
+     * next_generation takes in a population and generates a new generation of that population.
+     * It does this by using an unbiased boxing method. By dividing the population into 10 boxes.
+     * For each parent in box 1, we randomly select a parent from box 2, 3, 4... 10 until box once is exhausted.
+     * This results in inPopulation.size / 2 offspring.
+     * We repeat the process until 9 times the original population is generated. The original population is added
+     * to this new generation and we sort for fitness, returning the top inPopulation.size solutions.
+     * @param inPopulation the input population to be breeded
+     * @param mutationFactor the rate of mutation for the breeding
+     * @return the top solutions of same size
+     */
     public static ArrayList<Character> next_generation(ArrayList<Character> inPopulation, double mutationFactor){
         Random rand = new Random();
-        int sectionSize = inPopulation.size() / 10;
+        int sectionSize = inPopulation.size() / 10; //Create 10 sections that are 1/10 the incoming population size
         ArrayList<Character> breededPopulation = new ArrayList<Character>();
         breededPopulation.ensureCapacity(inPopulation.size()*10);
+        /*
+        We want to end with offspring of size that is 10 times the original population size, and each iteration of
+        breeding generates offspring of size n/2 (2 parents generate 1 offspring).
+        After 18 generations we will end with offspring of size n * 18/2 = n * 9. Adding the original population
+        as we don't want to lose the original parents results in n * 9 + n = n * 10 which is our target breeding.
+        We must iterate 18 times to generate enough offspring for diversity.
+         */
         for(int i = 0; i < 18; ++i){
-            ArrayList<Character> section1 = new ArrayList<Character>();
-            section1.ensureCapacity(sectionSize);
-            ArrayList<Character> section2 = new ArrayList<Character>();
-            section2.ensureCapacity(sectionSize);
-            ArrayList<Character> section3 = new ArrayList<Character>();
-            section3.ensureCapacity(sectionSize);
-            ArrayList<Character> section4 = new ArrayList<Character>();
-            section4.ensureCapacity(sectionSize);
-            ArrayList<Character> section5 = new ArrayList<Character>();
-            section5.ensureCapacity(sectionSize);
-            ArrayList<Character> section6 = new ArrayList<Character>();
-            section6.ensureCapacity(sectionSize);
-            ArrayList<Character> section7 = new ArrayList<Character>();
-            section7.ensureCapacity(sectionSize);
-            ArrayList<Character> section8 = new ArrayList<Character>();
-            section8.ensureCapacity(sectionSize);
-            ArrayList<Character> section9 = new ArrayList<Character>();
-            section9.ensureCapacity(sectionSize);
-            ArrayList<Character> section10 = new ArrayList<Character>();
-            section10.ensureCapacity(sectionSize);
+            LinkedList<Character> section1 = new LinkedList<Character>();
+            LinkedList<Character> section2 = new LinkedList<Character>();
+            LinkedList<Character> section3 = new LinkedList<Character>();
+            LinkedList<Character> section4 = new LinkedList<Character>();
+            LinkedList<Character> section5 = new LinkedList<Character>();
+            LinkedList<Character> section6 = new LinkedList<Character>();
+            LinkedList<Character> section7 = new LinkedList<Character>();
+            LinkedList<Character> section8 = new LinkedList<Character>();
+            LinkedList<Character> section9 = new LinkedList<Character>();
+            LinkedList<Character> section10 = new LinkedList<Character>();
             for(int j = 0; j < sectionSize/10; ++j){
                 for(int k = 0; k < 10; ++k){
                     section1.add(inPopulation.get(k+(j*10)));
@@ -90,16 +130,22 @@ public class GearOptimizer {
                     section10.add(inPopulation.get(k+(j*10)+(sectionSize*9)));
                 }
             }
+            //declare function variables
             int temp;
             Character offspring;
+            //Breed section 1 with every section until it is empty
+            //Remove the chosen parents from each linked list upon breading
+            //TODO: Revamp this to be array based with a boolean array for selected parents, instead of needing to
+            // linkedlist removal (was previously arraylist removal which is even greater time complexity
             while(!section1.isEmpty()){
+                //TODO: break this into a separate function to remove reused code
                 temp = rand.nextInt(section2.size());
                 offspring = crossover_breed(section1.get(section1.size()-1), section2.get(temp));
                 mutator(offspring, mutationFactor);
                 breededPopulation.add(offspring);
                 section1.remove(section1.get(section1.size()-1));
                 section2.remove(temp);
-                if(section1.isEmpty())
+                if(section1.isEmpty()) // End Loop if section becomes empty after breeding
                     break;
                 temp = rand.nextInt(section3.size());
                 offspring = crossover_breed(section1.get(section1.size()-1), section3.get(temp));
@@ -107,7 +153,7 @@ public class GearOptimizer {
                 breededPopulation.add(offspring);
                 section1.remove(section1.get(section1.size()-1));
                 section3.remove(temp);
-                if(section1.isEmpty())
+                if(section1.isEmpty()) // End Loop if section becomes empty after breeding
                     break;
                 temp = rand.nextInt(section4.size());
                 offspring = crossover_breed(section1.get(section1.size()-1), section4.get(temp));
@@ -115,7 +161,7 @@ public class GearOptimizer {
                 breededPopulation.add(offspring);
                 section1.remove(section1.get(section1.size()-1));
                 section4.remove(temp);
-                if(section1.isEmpty())
+                if(section1.isEmpty()) // End Loop if section becomes empty after breeding
                     break;
                 temp = rand.nextInt(section5.size());
                 offspring = crossover_breed(section1.get(section1.size()-1), section5.get(temp));
@@ -123,7 +169,7 @@ public class GearOptimizer {
                 breededPopulation.add(offspring);
                 section1.remove(section1.get(section1.size()-1));
                 section5.remove(temp);
-                if(section1.isEmpty())
+                if(section1.isEmpty()) // End Loop if section becomes empty after breeding
                     break;
                 temp = rand.nextInt(section6.size());
                 offspring = crossover_breed(section1.get(section1.size()-1), section6.get(temp));
@@ -131,7 +177,7 @@ public class GearOptimizer {
                 breededPopulation.add(offspring);
                 section1.remove(section1.get(section1.size()-1));
                 section6.remove(temp);
-                if(section1.isEmpty())
+                if(section1.isEmpty()) // End Loop if section becomes empty after breeding
                     break;
                 temp = rand.nextInt(section7.size());
                 offspring = crossover_breed(section1.get(section1.size()-1), section7.get(temp));
@@ -139,7 +185,7 @@ public class GearOptimizer {
                 breededPopulation.add(offspring);
                 section1.remove(section1.get(section1.size()-1));
                 section7.remove(temp);
-                if(section1.isEmpty())
+                if(section1.isEmpty()) // End Loop if section becomes empty after breeding
                     break;
                 temp = rand.nextInt(section8.size());
                 offspring = crossover_breed(section1.get(section1.size()-1), section8.get(temp));
@@ -147,7 +193,7 @@ public class GearOptimizer {
                 breededPopulation.add(offspring);
                 section1.remove(section1.get(section1.size()-1));
                 section8.remove(temp);
-                if(section1.isEmpty())
+                if(section1.isEmpty()) // End Loop if section becomes empty after breeding
                     break;
                 temp = rand.nextInt(section9.size());
                 offspring = crossover_breed(section1.get(section1.size()-1), section9.get(temp));
@@ -155,7 +201,7 @@ public class GearOptimizer {
                 breededPopulation.add(offspring);
                 section1.remove(section1.get(section1.size()-1));
                 section9.remove(temp);
-                if(section1.isEmpty())
+                if(section1.isEmpty()) // End Loop if section becomes empty after breeding
                     break;
                 temp = rand.nextInt(section10.size());
                 offspring = crossover_breed(section1.get(section1.size()-1), section10.get(temp));
@@ -460,16 +506,13 @@ public class GearOptimizer {
                 section10.remove(0);
 
             }
-            if(!section10.isEmpty()){
-                System.out.println("Section 10 not empty?");
-                System.out.println(section10.size());
-            }
-
         }
+        // Assign fitness value for each offspring
         for(int m = 0; m < breededPopulation.size(); ++m){
             breededPopulation.get(m).fitness = fitness(breededPopulation.get(m));
         }
-        breededPopulation.addAll(inPopulation);
+        breededPopulation.addAll(inPopulation); //readd original population
+        //sort the population, highest fitness closer to beginning of list
         Collections.sort(breededPopulation, Collections.reverseOrder());
         for(int i = 0; i < inPopulation.size(); ++i){
             inPopulation.set(i, breededPopulation.get(i));
@@ -477,6 +520,15 @@ public class GearOptimizer {
         return inPopulation;
     }
 
+    /**
+     * This functions takes two characters and generates a new outfit solution adhering to the constraints
+     * of the solution by randomly selecting a piece of equipment from the parent and assigning it to the offspring.
+     * If the selected piece of equipment fails to adhere to the constraints- randomly generate a new piece of
+     * equipment that adheres to the constraints.
+     * @param a the first parent
+     * @param b the second parent
+     * @return the offspring solution that is a random selection of equipment of parent a and parent b
+     */
     public static Character crossover_breed(Character a, Character b){
         Character offspring = new Character();
         offspring.outfit.resetLore();
@@ -781,6 +833,13 @@ public class GearOptimizer {
         return offspring;
     }
 
+    /**
+     * The mutator function randomly mutates a piece of equipment by generating a random piece of equipment
+     * for that slot that would adhere to the problem constaints in the event it's probability
+     * falls under the mutationFactor
+     * @param inCharacter the character solution to test mutation
+     * @param mutationFactor the % rate at which each slot could mutate
+     */
     public static void mutator(Character inCharacter, double mutationFactor){
         Random rand = new Random();
         //Ear1
@@ -1012,6 +1071,12 @@ public class GearOptimizer {
         //Skip Ranged
     }
 
+    /**
+     * Helper function that will reset all the appropriate lore flags for a piece of equipment.
+     * Useful when mutating a piece of equipment to allow further changes to adhere to problem parameters
+     * @param inCharacter the character solution to modify
+     * @param item the specific item that requires the flags to be reset
+     */
     public static void resetLoreAugment(Character inCharacter, Equipment item){
         if(item.hasAugment()){
             if(item.augment != null){
@@ -1125,6 +1190,13 @@ public class GearOptimizer {
         }
     }
 
+    /**
+     * Function to determine the fitness of an item.
+     * Based on weights assigned to each game statistic based on what is desired by the user.
+     * TODO: These values should be modified by user input based on what user determines is valuable
+     * @param inCharacter the character solution to test
+     * @return the fitness value
+     */
     public static double fitness(Character inCharacter){
         double fitnessScore = 0;
         // Stat Weights
@@ -1498,6 +1570,10 @@ public class GearOptimizer {
         return fitnessScore;
     }
 
+    /**
+     * will print the calculated statistics of a character solution to console
+     * @param inCharacter the character solution to print
+     */
     public static void printStats(Character inCharacter){
         //Evaluated Values
         double evaluated_bonusAC = inCharacter.bonusAC;
